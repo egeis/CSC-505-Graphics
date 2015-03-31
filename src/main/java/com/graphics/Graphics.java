@@ -34,7 +34,7 @@ public class Graphics {
          t1.fill();
          t1.draw();
          
-         Triangle t3 = new Triangle(new Point(301,700, new Color(255,0,0,255)), new Point(590,700, new Color(0,255,0,255)), new Point(590,400, new Color(0,0,255,255)));
+         Triangle t3 = new Triangle(new Point(301,700, new Color(200,200,200,255)), new Point(590,700, new Color(255,255,255,255)), new Point(590,400, new Color(100,100,100,255)));
          t3.fill();
          t3.draw();
          
