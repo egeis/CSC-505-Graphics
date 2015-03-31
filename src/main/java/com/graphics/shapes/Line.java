@@ -8,7 +8,7 @@ import main.java.com.graphics.shapes.utils.Point;
  * 
  * @author Richard Coan
  */
-public class Line extends GraphicsObject {
+public class Line extends GraphicsObject {    
     public Line(Point start, Point end)
     {
         //Distances
