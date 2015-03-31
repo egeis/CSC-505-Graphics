@@ -31,21 +31,27 @@ public class Graphics {
         
         //Reflection
          Triangle t1 = new Triangle(new Point(10,400, new Color(255,0,0,255)), new Point(10,700, new Color(255,0,0,255)), new Point(300,700, new Color(255,0,0,255)));
-         t1.draw(true);
+         t1.fill();
+         t1.draw();
          
-         Triangle t3 = new Triangle(new Point(301,700, new Color(255,0,0,255)), new Point(590,700, new Color(255,0,0,255)), new Point(590,400, new Color(255,0,0,255)));
-         t3.draw(true);
+         Triangle t3 = new Triangle(new Point(301,700, new Color(255,0,0,255)), new Point(590,700, new Color(0,255,0,255)), new Point(590,400, new Color(0,0,255,255)));
+         t3.fill();
+         t3.draw();
          
          //Multiple Colors
          Triangle t2 = new Triangle(new Point(10,10, new Color(255,0,0,255)), new Point(10,300, new Color(0,0,255,255)), new Point(300,300, new Color(0,255,0,255)));
-         t2.draw(true);
+         t2.fill();
+         t2.draw();
          
          //Transparent Test
          Triangle t4 = new Triangle(new Point(300,10, new Color(100,160,0,150)), new Point(300,300, new Color(100,160,0,150)), new Point(600,300, new Color(100,160,0,150)));
-         t4.draw(true);
+         t4.fill();
+         t4.draw();
          
          Triangle t5 = new Triangle(new Point(120,10, new Color(255,0,0,50)), new Point(500,300, new Color(120,0,0,50)), new Point(300,300, new Color(120,0,0,50)));
-         t5.draw(true);
+         t5.fill();
+         t5.showBounds();
+         t5.draw();
          
          ImageReadWrite.ImageWrite(img, "graphics.png");
         
