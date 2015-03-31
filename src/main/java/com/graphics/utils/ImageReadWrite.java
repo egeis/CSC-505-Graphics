@@ -4,9 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
 /**
  *
- * @author Richard
+ * @author Richard Coan
  */
 public class ImageReadWrite {
     
@@ -33,12 +34,13 @@ public class ImageReadWrite {
     
     public static void ImageWrite(int img[][][], String filename) {
         try {
-            BufferedImage bi = new BufferedImage(img[0][0].length, img[0].length, BufferedImage.TYPE_INT_RGB);
+            BufferedImage bi = new BufferedImage(img[0][0].length, img[0].length, BufferedImage.TYPE_INT_ARGB);
 
             // -- prepare output image
             for (int i = 0; i < bi.getHeight(); ++i) {
                 for (int j = 0; j < bi.getWidth(); ++j) {
-                            int pixel =	(img[0][i][j] << 16) | (img[1][i][j] << 8) | (img[2][i][j]);
+                            //int pixel =	(img[0][i][j] << 16) | (img[1][i][j] << 8) | (img[2][i][j]);
+                            int pixel =	(img[0][i][j] << 16) | (img[1][i][j] << 8) | (img[2][i][j]) | (img[3][i][j] << 24);
                             bi.setRGB(j, i, pixel);
                     }
             }
