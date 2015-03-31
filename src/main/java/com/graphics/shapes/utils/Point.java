@@ -9,6 +9,13 @@ import java.awt.Color;
 
 public class Point extends java.awt.Point {
     public Color color = Color.red;
+    public boolean forceColor;
+    
+    public Point(int x, int y, Color color, boolean forceColor)
+    {
+        this(x, y, color);
+        this.forceColor = forceColor;
+    }
     
     public Point(int x, int y, Color color)
     {
