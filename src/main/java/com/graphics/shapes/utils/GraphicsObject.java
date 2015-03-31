@@ -15,51 +15,91 @@ import main.java.com.graphics.shapes.Line;
 public abstract class GraphicsObject {
     
     protected Set<Point> points = new HashSet();
-
+    protected Set<Point> bounds = new HashSet();
+    protected boolean allowBounds = true;
+    
+    //Used for bounding box;
+    protected int minX;
+    protected int minY;
+    protected int maxX;
+    protected int maxY;    
+    
+    protected void calculateBounds(Point[] init)
+    {
+        if( init.length <= 2) return;
+        
+        //Set Initial values
+        minX = init[0].x;
+        minY = init[0].y;
+        maxX = init[0].x;
+        maxY = init[0].y;
+        
+        for(Point p : init)
+        {
+            if(p.x < minX) minX = p.x;
+            if(p.y < minY) minY = p.y;
+            if(p.x > maxX) maxX = p.x;
+            if(p.y > maxY) maxY = p.y;
+        }
+    }
+    
     public Set<Point> getPoints() {
         return points;
     }
     
-    public void draw(boolean fill)
+    public void showBounds()
     {
-       if(fill)
-       {
-            Set<Point> completed = new HashSet();
+        this.showBounds(new Color(0,0,0,255));
+    }
+    
+    public void showBounds(Color color)
+    {
+        if(!allowBounds) return;
+        
+        Point p1 = new Point(minX,minY,color,true);
+        Point p2 = new Point(minX,maxY,color,true);
+        Point p3 = new Point(maxX,minY,color,true);
+        Point p4 = new Point(maxX,maxY,color,true);
+        
+        bounds.addAll(new Line(p1, p2).getPoints());
+        bounds.addAll(new Line(p2, p4).getPoints());
+        bounds.addAll(new Line(p3, p4).getPoints());
+        bounds.addAll(new Line(p1, p3).getPoints());
+    }
+    
+    public void fill()
+    {
+        Set<Point> completed = new HashSet();
+
+        while(points.size() > 0)
+        {
+            Iterator iter = points.iterator();
+            Point s1 = (Point) iter.next();
+            points.remove(s1);
             
-            while(points.size() > 0)
+            Point s2 = null;
+            
+            boolean sP = false;
+            for(Point p : points)
             {
-                Iterator iter = points.iterator();
-                Point s1 = (Point) iter.next();
-                points.remove(s1);
-
-                Point s2 = null;
-
-                boolean sP = false;
-                for(Point p : points)
+                if(s1.y == p.y)
                 {
-                    if(s1.y == p.y)
-                    {
-                        s2 = p;
-                        //points.remove(p);
-                        sP = true;
-                        break;
-                    }
-                }
-
-                if(sP)
-                {
-                    completed.addAll(new Line(s1, s2).getPoints());
-                } else {
-                    System.out.println(s1 + " : was alone...");
-                    completed.add(s1);
+                    s2 = p;
+                    sP = true;
+                    break;
                 }
             }
 
-            points.clear();
-            points.addAll(completed);
-       }
-       
-       this.draw();
+            if(sP)
+            {
+                completed.addAll(new Line(s1, s2).getPoints());
+            } else {
+                completed.add(s1);
+            }
+        }
+
+        points.clear();
+        points.addAll(completed);
     }
     
     public void draw()
@@ -67,9 +107,7 @@ public abstract class GraphicsObject {
         int t = 0;
         double r, g, b, a;
         Color color;
-        
-        System.out.println(Graphics.img[3][300][300]);
-        
+               
         for(Point p : points) {
             //Handles Out of Bounds
             if(p.x < 0 || p.x > (Graphics.WIDTH - 1) 
@@ -78,7 +116,6 @@ public abstract class GraphicsObject {
             //Handles Depth (objects drawn from closest first).
             if( Graphics.img[3][p.y][p.x] == 255) 
             {
-                System.out.println(p + " : is already used...");
                 continue;
             } else if(Graphics.img[3][p.y][p.x] != 0)
             {
@@ -100,6 +137,20 @@ public abstract class GraphicsObject {
                 color = p.color;
             }
 
+            //Setting the color data to the image.
+            Graphics.img[0][p.y][p.x] = color.getRed();
+            Graphics.img[1][p.y][p.x] = color.getGreen();
+            Graphics.img[2][p.y][p.x] = color.getBlue();
+            Graphics.img[3][p.y][p.x] = color.getAlpha();
+        }
+        
+        for(Point p : bounds) {
+            //Handles Out of Bounds
+            if(p.x < 0 || p.x > (Graphics.WIDTH - 1) 
+                    || p.y < 0 || p.y > (Graphics.HEIGHT - 1)) continue;
+            
+            color = p.color;
+            
             //Setting the color data to the image.
             Graphics.img[0][p.y][p.x] = color.getRed();
             Graphics.img[1][p.y][p.x] = color.getGreen();
