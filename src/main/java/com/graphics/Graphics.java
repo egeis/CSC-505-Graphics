@@ -29,7 +29,10 @@ public class Graphics {
         ImageReadWrite.ImageWrite(Filter.convertToRGB(lum[0]), "luminance.png");
         ImageReadWrite.ImageWrite(Filter.convertToRGB(lum[1]), "bluechrominance.png");
         ImageReadWrite.ImageWrite(Filter.convertToRGB(lum[2]), "redchrominance.png");
-         
+        ImageReadWrite.ImageWrite(Filter.converToGamma(lum[0]), "gamma.png");
+        ImageReadWrite.ImageWrite(Filter.converToThreshold(lum[0]), "threshold.png");
+        ImageReadWrite.ImageWrite(Filter.converToDither(lum[0]), "dither.png");
+        
     }
     
 }
