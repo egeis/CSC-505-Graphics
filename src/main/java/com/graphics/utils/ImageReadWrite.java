@@ -23,6 +23,7 @@ public class ImageReadWrite {
                     img[0][i][j] = bi.getRGB(j, i) >> 16 & 0xFF;
                     img[1][i][j] = bi.getRGB(j, i) >> 8 & 0xFF;
                     img[2][i][j] = bi.getRGB(j, i) & 0xFF;
+                    //img[3][i][j] << 24
                 }
             }
            return img;
